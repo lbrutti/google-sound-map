@@ -52,11 +52,11 @@
 			Tabletop.init({
 				key: "1YhxYdrb3xnSwxC6RFu9OHu7lYdCc16YyLB_HT51KPZ4",
 				callback: function(data, tabletop) {
+					$.each(data, function(i,record){
 
-					for (record of data) {
 						// Example standard marker
 						var marker = new google.maps.Marker({
-							position: new google.maps.LatLng(record.lat, record.long),
+							position: new google.maps.LatLng(record.lat, record.lng),
 							map: map,
 							title: record.titolo,
 							customData: {
@@ -71,7 +71,7 @@
 
 							infowindow.open(map, marker);
 						});
-					}
+					});
 				},
 				simpleSheet: true
 			});

@@ -4,27 +4,24 @@
 <head>
 
 	<title>Sound Map example</title>
-
-	<style type="text/css">
-		#map-canvas {
-			width: 700px;
-			height: 400px;
-		}
-	</style>
+	<!-- gmap api key : &key=AIzaSyAW1I8WCse155dQNozsS1eNLqSF24tMrgI -->
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-	<!--gmap key : &key=AIzaSyAW1I8WCse155dQNozsS1eNLqSF24tMrgI  -->
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&callback=initialize"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.2/tabletop.min.js"></script>
+	<!-- <script type="text/javascript" src="https://cdnjs.com/libraries/handlebars.js"></script> -->
+
+
+
 	<script type="text/javascript">
 		function initialize() {
+			$('#map-canvas').css("width", window.innerWidth * 0.98);
+			$('#map-canvas').css("height", window.innerHeight * 0.95);
 			var myLatlng = new google.maps.LatLng(45.5620107, 12.237565);
 			var mapOptions = {
 				zoom: 14,
 				center: myLatlng,
 				disableDefaultUI: false
 			}
-			$('#map-canvas').css("width",window.innerWidth*0.98);
-			$('#map-canvas').css("height",window.innerHeight*0.95);
 			var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
 			var contentString = '<div id="content">' +
@@ -52,18 +49,28 @@
 			var infowindow = new google.maps.InfoWindow({
 				content: contentString
 			});
-			// Example standard marker
 			Tabletop.init({
 				key: "1YhxYdrb3xnSwxC6RFu9OHu7lYdCc16YyLB_HT51KPZ4",
 				callback: function(data, tabletop) {
-					console.log(data)
-					var marker = new google.maps.Marker({
-						position: myLatlng,
-						map: map,
-						title: 'Hello World!'
-					});
-					marker.addListener('click', function() {
-						infowindow.open(map, marker);
+					$.each(data, function(i,record){
+
+						// Example standard marker
+						var marker = new google.maps.Marker({
+							position: new google.maps.LatLng(record.lat, record.lng),
+							map: map,
+							title: record.titolo,
+							customData: {
+								"autore": record.autore,
+								"descrizione": record.descrizione,
+								"luogo": record.luogo,
+								"url": record.url,
+								"immagine": record.immagine
+							}
+						});
+						marker.addListener('click', function() {
+
+							infowindow.open(map, marker);
+						});
 					});
 				},
 				simpleSheet: true

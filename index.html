@@ -3,7 +3,7 @@
 
 <head>
 
-	<title>Google Maps API</title>
+	<title>Sound Map example</title>
 
 	<style type="text/css">
 		#map-canvas {
@@ -22,16 +22,20 @@
 				center: myLatlng,
 				disableDefaultUI: false
 			}
-			 Tabletop.init( { key: "1YhxYdrb3xnSwxC6RFu9OHu7lYdCc16YyLB_HT51KPZ4",
-			 callback: function(data, tabletop) {
-			 console.log(data)
-			 },
-			 simpleSheet: true } );
+			Tabletop.init({
+				key: "1YhxYdrb3xnSwxC6RFu9OHu7lYdCc16YyLB_HT51KPZ4",
+				callback: function(data, tabletop) {
+					console.log(data)
+				},
+				simpleSheet: true
+			});
 
+			$('#map-canvas').css("width",window.innerWidth*0.98);
+			$('#map-canvas').css("height",window.innerHeight*0.95);
 			var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
 			var contentString = '<div id="content">' +
-			'<iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/174975661&color=%23ff5500&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>'+
+				'<iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/174975661&color=%23ff5500&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>' +
 				'<div id="siteNotice">' +
 				'</div>' +
 				'<h1 id="firstHeading" class="firstHeading">Uluru</h1>' +
@@ -62,8 +66,8 @@
 				title: 'Hello World!'
 			});
 			marker.addListener('click', function() {
-			    infowindow.open(map, marker);
-			  });
+				infowindow.open(map, marker);
+			});
 		}
 
 		google.maps.event.addDomListener(window, 'load', initialize);
